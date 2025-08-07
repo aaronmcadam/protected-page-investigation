@@ -1,4 +1,8 @@
+"use client"
+
 import { Settings, Users, Package } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 import {
   Sidebar,
@@ -27,13 +31,15 @@ const items = [
 ]
 
 export function AppSidebar() {
+  const pathname = usePathname()
+
   return (
     <Sidebar>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="/admin">
+            <SidebarMenuButton size="lg" asChild isActive={pathname === '/admin'}>
+              <Link href="/admin">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   <Package className="size-4" />
                 </div>
@@ -41,7 +47,7 @@ export function AppSidebar() {
                   <span className="truncate font-semibold">Admin Panel</span>
                   <span className="truncate text-xs">Management</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
@@ -53,11 +59,11 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                  <SidebarMenuButton asChild isActive={pathname === item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
