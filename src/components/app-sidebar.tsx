@@ -1,6 +1,6 @@
 "use client"
 
-import { Settings, Users, Package } from "lucide-react"
+import { Settings, Users, Package, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -16,8 +16,17 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-// Menu items.
-const items = [
+// Navigation items
+const navigationItems = [
+  {
+    title: "Back to Home",
+    url: "/",
+    icon: ArrowLeft,
+  },
+]
+
+// Admin items
+const adminItems = [
   {
     title: "Users",
     url: "/admin/users",
@@ -44,8 +53,8 @@ export function AppSidebar() {
                   <Package className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Admin Panel</span>
-                  <span className="truncate text-xs">Management</span>
+                  <span className="truncate font-semibold">ShareWise</span>
+                  <span className="truncate text-xs">Admin Panel</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -53,11 +62,30 @@ export function AppSidebar() {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
+        {/* Navigation Section */}
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {navigationItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild isActive={pathname === item.url}>
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* Admin Section */}
         <SidebarGroup>
           <SidebarGroupLabel>Admin</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {adminItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={pathname === item.url}>
                     <Link href={item.url}>

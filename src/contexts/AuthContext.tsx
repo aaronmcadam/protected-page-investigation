@@ -23,24 +23,18 @@ function getCookie(name: string): string | null {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  // Initialize with cookie value if available (client-side only)
-  const [currentRole, setCurrentRole] = useState<UserRole>(() => {
-    if (typeof window === 'undefined') return 'guest'
-    const cookieRole = getCookie('userRole') as UserRole
-    return cookieRole && ['guest', 'user', 'admin'].includes(cookieRole) ? cookieRole : 'guest'
-  })
-  const [isHydrated, setIsHydrated] = useState(() => typeof window !== 'undefined')
+  // Always start with 'guest' to match server-side rendering
+  const [currentRole, setCurrentRole] = useState<UserRole>('guest')
+  const [isHydrated, setIsHydrated] = useState(false)
 
-  // Only run effect if we're on the server initially
+  // Read cookie after hydration to avoid mismatch
   useEffect(() => {
-    if (!isHydrated) {
-      const cookieRole = getCookie('userRole') as UserRole
-      if (cookieRole && ['guest', 'user', 'admin'].includes(cookieRole)) {
-        setCurrentRole(cookieRole)
-      }
-      setIsHydrated(true)
+    const cookieRole = getCookie('userRole') as UserRole
+    if (cookieRole && ['guest', 'user', 'admin'].includes(cookieRole)) {
+      setCurrentRole(cookieRole)
     }
-  }, [isHydrated])
+    setIsHydrated(true)
+  }, [])
 
   const setRole = (role: UserRole) => {
     setCurrentRole(role)

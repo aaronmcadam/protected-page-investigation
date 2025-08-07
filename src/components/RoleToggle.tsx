@@ -12,20 +12,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
 import { ChevronDown, User, Shield, UserX } from 'lucide-react'
 
 export function RoleToggle() {
   const { currentRole, setRole, isHydrated } = useAuth()
-
-  // Show skeleton until hydrated to avoid mismatch
-  if (!isHydrated) {
-    return (
-      <div className="fixed top-4 right-4 z-50">
-        <Skeleton className="h-12 w-[140px] rounded-md" />
-      </div>
-    )
-  }
 
   const roles: { 
     value: UserRole
@@ -64,7 +54,7 @@ export function RoleToggle() {
   }
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className="fixed top-4 right-4 z-50" suppressHydrationWarning>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
