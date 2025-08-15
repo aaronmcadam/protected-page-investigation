@@ -10,14 +10,16 @@ export default async function middleware(req: NextRequest) {
     const userRole = req.cookies.get('userRole')?.value;
     console.log('👤 User role:', userRole);
     
-    if (userRole !== 'admin') {
-      console.log('🚫 BLOCKING - User is not admin, showing 404');
+    // Check if user has admin access (auditor, editor, or superAdmin)
+    const adminRoles = ['auditor', 'editor', 'superAdmin'];
+    if (!adminRoles.includes(userRole || '')) {
+      console.log('🚫 BLOCKING - User does not have admin access, showing 404');
       
       // Rewrite to 404 page to pretend admin pages don't exist
       return NextResponse.rewrite(new URL('/404', req.url));
     }
     
-    console.log('✅ ALLOWING - User is admin');
+    console.log('✅ ALLOWING - User has admin access:', userRole);
   }
   
   return NextResponse.next();

@@ -3,6 +3,8 @@
 import { Settings, Users, Package, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Protect } from "@/components/permissions"
+
 
 import {
   Sidebar,
@@ -53,7 +55,7 @@ export function AppSidebar() {
                   <Package className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">ShareWise</span>
+                  <span className="truncate font-semibold">Acme</span>
                   <span className="truncate text-xs">Admin Panel</span>
                 </div>
               </Link>
@@ -85,16 +87,51 @@ export function AppSidebar() {
           <SidebarGroupLabel>Admin</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {adminItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {adminItems.map((item) => {
+                // Settings requires special permission check
+                if (item.title === "Settings") {
+                  return (
+                    <Protect key={item.title} permission="settings:access">
+                      <SidebarMenuItem>
+                        <SidebarMenuButton asChild isActive={pathname === item.url}>
+                          <Link href={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </Protect>
+                  )
+                }
+                
+                // Users requires users:read permission (available to all admin roles)
+                if (item.title === "Users") {
+                  return (
+                    <Protect key={item.title} permission="users:read">
+                      <SidebarMenuItem>
+                        <SidebarMenuButton asChild isActive={pathname === item.url}>
+                          <Link href={item.url}>
+                            <item.icon />
+                            <span>{item.title}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </Protect>
+                  )
+                }
+                
+                // Fallback for any other admin items
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton asChild isActive={pathname === item.url}>
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
