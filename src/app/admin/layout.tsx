@@ -14,7 +14,7 @@ export default function AdminLayout({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <main className="@container/main flex flex-1 flex-col gap-4 p-4 pt-0">
+        <main className="@container/main flex flex-1 flex-col gap-4 p-4 pt-0 bg-gray-50">
           {children}
         </main>
       </SidebarInset>
