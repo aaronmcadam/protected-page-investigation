@@ -31,7 +31,7 @@ import {
   IconGripVertical,
   IconLayoutColumns,
   IconLoader,
-  IconPlus,
+
   IconTrendingUp,
 } from "@tabler/icons-react";
 import {
@@ -50,7 +50,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-import { toast } from "sonner";
+
 import { z } from "zod";
 
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -99,7 +99,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 
 export const schema = z.object({
   id: z.number(),

@@ -131,7 +131,7 @@ export function PermissionTable() {
     title: string;
     permissions: typeof PERMISSIONS;
     count: number;
-    icon: any;
+    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   }) => (
     <div className="space-y-3">
       <div className="flex items-center gap-2">
@@ -247,7 +247,7 @@ export function PermissionTable() {
 
             {filteredPermissions.length === 0 && (
               <div className="text-center py-8 text-muted-foreground">
-                No permissions found matching "{searchTerm}"
+                No permissions found matching &quot;{searchTerm}&quot;
               </div>
             )}
           </div>
@@ -273,4 +273,3 @@ export function PermissionTable() {
     </Card>
   );
 }
-

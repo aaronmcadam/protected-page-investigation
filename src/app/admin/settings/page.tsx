@@ -51,7 +51,7 @@ export default function SettingsPage() {
                   Access Denied
                 </CardTitle>
                 <CardDescription>
-                  You don't have permission to access system settings
+                  You don&apos;t have permission to access system settings
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -86,7 +86,7 @@ export default function SettingsPage() {
                 <Alert>
                   <Key className="h-4 w-4" />
                   <AlertDescription>
-                    You don't have permission to view or modify system permissions. 
+                    You don&apos;t have permission to view or modify system permissions. 
                     Please contact your system administrator or support team if you need access to this feature.
                   </AlertDescription>
                 </Alert>
